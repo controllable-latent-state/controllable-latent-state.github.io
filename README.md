@@ -1,2 +1,3 @@
-# controllable-latent-state.github.io
-Latent State Discovery
+# AC-State Project Page
+
+Website

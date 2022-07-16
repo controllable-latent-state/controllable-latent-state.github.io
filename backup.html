@@ -1,0 +1,352 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GDXSC5Y2BD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GDXSC5Y2BD');
+</script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<script src="./files/head.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<meta name="keywords" content="Microsoft Research NYC,Reinforcement,Learning,Computer Science,Machine,Artificial,Intelligence">
+
+<article class="post-content">
+  <meta name="twitter:title" content="Guaranteed Discovery of Controllable Latent States with Multi-Step Inverse Models"/>
+  <meta name="twitter:card" content="summary_large_image" />
+<!--   <meta name="twitter:image" content="https://people.eecs.berkeley.edu/~janner/trajectory-transformer/images/humanoid_padded.png" /> -->
+<article class="post-content">
+
+<title>Guaranteed Discovery of Controllable Latent States with Multi-Step Inverse Models</title>
+<link rel="stylesheet" href="./files/font.css">
+<link rel="stylesheet" href="./files/main.css">
+
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+<style>
+body {
+  font-family: "Computer Modern Serif", serif;
+  font-size: 14pt;
+}
+
+
+* {padding:0;margin:0;box-sizing:border-box;}
+#video {
+  position: relative;
+  padding-bottom: 45%; /* 16:9 */
+  height: 0;
+}
+#video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 100%;
+  transform: translateX(12.5%);
+}
+
+</style>
+
+  <style type="text/css">/**
+ * Style sheet used by new LibX tooltip code
+ */
+
+/* We insert a <div> with libx-tooltip style under the body.
+ * This will inherit body's style - we can't afford to inherit undesirable 
+ * styles and we must redefine what we need.  OTOH, some things, e.g.
+ * font-size, might be ok to be inherited to stay within the page's tone.
+ */
+.libx-tooltip {
+    display: none;
+    overflow: visible;
+    padding: 5px;
+    z-index: 100;
+    background-color: #eee;
+    color: #000;
+    font-weight: normal;
+    font-style: normal;
+    text-align: left;
+    border: 2px solid #666;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+
+.libx-tooltip p {
+    /* override default 1em margin to keep paragraphs inside a tooltip closer together. */
+    margin: .2em;
+}
+</style><style type="text/css">/**
+ * Style sheet used by LibX autolinking code
+ */
+.libx-autolink {
+}
+
+</style>
+
+</head>
+
+  <body>
+
+    <div class="outercontainer">
+      <div class="container">
+
+        <div class="content project_title">
+          <br>
+          <h2>Guaranteed Discovery of Controllable Latent States <br> with Multi-Step Inverse Models</h2>
+          <div class="authors">
+            <a href="https://people.eecs.berkeley.edu/~janner/">Alex Lamb</a>,
+            <a href="https://people.eecs.berkeley.edu/~janner/">Riashat Islam</a>,
+            <a href="https://people.eecs.berkeley.edu/~janner/">Yonathan Efroni</a>,
+            <a href="https://people.eecs.berkeley.edu/~janner/">Aniket Didolkar</a>,
+            <a href="https://people.eecs.berkeley.edu/~janner/">Dipendra Misra</a>,
+            <a href="https://people.eecs.berkeley.edu/~janner/">Dylan Foster</a>,
+            <a href="https://people.eecs.berkeley.edu/~janner/">Olalekan Ogunmolu</a>,
+            <a href="https://people.eecs.berkeley.edu/~janner/">Rajan Chari</a>,  
+            <a href="https://scholar.google.com/citations?user=qlwwdfEAAAAJ&hl=en">Akshay Krishnamurthy</a>, and
+            <a href="https://people.eecs.berkeley.edu/~svlevine/">John Langford</a>
+          </div>
+          <!-- <br> -->
+          <!-- <a href="https://arxiv.org/abs/2106.02039">Paper</a> -->
+           <!-- <a href="./trajectory-transformer-neurips-2021.pdf">Paper</a> -->
+
+          <div>
+            <!-- <span class="venue"><a href="https://neurips.cc/">Sample 2021 (spotlight)</a></span> -->
+            <span class="venue"><a href="https://neurips.cc/">PNAS Submission</a></span>
+            <span class="tag">
+              <a href="https://arxiv.org/abs/2106.020392323232">Paper</a>&nbsp;
+              <!-- <a href="./trajectory-transformer-neurips-2021.pdf">Paper</a>&nbsp; -->
+              <a href="https://github.com/Riashat/discrete-factors">Code</a>&nbsp;
+<!--               <a href="https://bair.berkeley.edu/blog/2021/11/19/trajectory-transformer/">Blog</a>&nbsp; -->
+              <a href="files/bib.txt">BibTex</a>&nbsp;
+            </span>
+          </div>
+        </div>
+
+        <br><br>
+
+<!--         <center>
+        <b><font size="4">Trajectory Transformer</font></b>
+        <video width=100% height=auto autoplay playsinline muted>
+          <source src="https://people.eecs.berkeley.edu/~janner/trajectory-transformer/images/gif_transformer.mp4" type="video/mp4">
+        </video>
+        <b><font size="4">Single-Step Model</font></b>
+        <video width=100% height=auto autoplay playsinline muted>
+          <source src="https://people.eecs.berkeley.edu/~janner/trajectory-transformer/images/gif_single_step.mp4" type="video/mp4">
+        </video>
+        <br>
+        <i>Long-horizon predictions of the Trajectory Transformer compared <br>to those of a feedforward single-step dynamics model.</i>
+        </center>
+        <p>
+        <br><br> -->
+
+        <div class="content">
+          <div class="text">
+            <p>
+              <div class="title"><b>Significance Statement</b></div>
+<!--               <b>
+                <font size="5">Summary</font>
+              </b> -->
+              <!-- &nbsp; -->
+              The AC-State algorithm discovers a latent representation of a system from a sequence of sensory observations and actions taken by an agent interacting in the system, while requiring no external supervision (such as rewards or labels).  
+              This consists of predicting actions from observations with the smallest possible representation.  This representation provably captures all of the information which is necessary for controlling the agent while discarding all irrelevant or distracting details. 
+              Previous approaches either fail to capture the full state or fail to ignore irrelevant information.  
+              We demonstrate this on a robot arm where we are able to recover the position of the arm using only a high-resolution video and recorded actions, while ignoring complex background distractors. 
+          </p>
+          </div>
+        </div>
+        <br>
+        <br>
+
+        <div class="content">
+          <div class="text">
+            <p>
+              <div class="title"><b>Controllable Latent State Discovery Algorithm</b></div>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/35JzR2ymxJE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </p>
+          </div>
+        </div>
+        <br>
+        <br>
+
+
+
+<!--       Videos of Learned Policies
+      ===============================================================================
+      Below, we visualize examples of the behavoir learned by our method. The green images shown on the left are examples of the success examples our method uses to learn these tasks. Note that these success examples are not expert trajectories, but rather examples of states where the task is solved (e.g., where t
+      **TASK:** Hammer the nail into the board.
+      ![Success Examples. <br> Note that the nail has already been inserted in all examples.](images/hammer.gif width="100%") ![SQIL (best prior method)](videos/sqil_hammer.mp4 width="100%") ![RCE (our method)](videos/hammer.mp4 width="100%")he nail is hammered into the wall). We emphasize that our method does not use any reward function.
+ -->
+
+
+
+        <div class="content">
+          <div class="text">
+            <p>
+              <div class="title"><b>Abstract</b></div>
+<!--               <b>
+                <font size="5">Summary</font>
+              </b> -->
+              <!-- &nbsp; -->
+            A person walking along a city street who tries to model all aspects of the world would quickly be overwhelmed by a multitude of shops, cars, and people moving in and out of view, following their own complex and inscrutable dynamics.  Exploration and navigation in such an environment is an everyday task, requiring no vast exertion of mental resources.  Is it possible to turn this fire hose of sensory information into a minimal latent state which is necessary and sufficient for an agent to successfully act in the world? We formulate this question concretely, and propose the Agent-Controllable State Discovery algorithm ($\selfstate$), which has theoretical guarantees and is practically demonstrated to discover the minimal controllable latent state which contains all of the information necessary for controlling the agent, while fully discarding all irrelevant information.    This algorithm consists of a multi-step inverse model (predicting actions from distant observations) with an information bottleneck.  AC-State enables localization, exploration, and navigation without reward or demonstrations.  We demonstrate the discovery of controllable latent state in three domains: localizing a robot arm with distractions (e.g., changing lighting conditions and background), exploring in a maze alongside other agents, and navigating in the Matterport house simulator.
+
+          </p>
+          </div>
+        </div>
+        <br>
+        <br>
+
+      </center>
+      <br>
+      <li> AC-State (right) is able to recover the controllable latent state of the factorized dynamics (left)</li>
+      <br>
+        <center>
+
+        <center>
+          <img src="images/method.png" alt="hi" class="inline"/>
+          <br>
+          <br>
+          &nbsp;
+        </center>
+
+
+<!--         <center>
+          <img src="images/maze.png" alt="hi" class="inline"/>
+          <br>
+          <br>
+          &nbsp;
+        </center> -->
+
+
+        <div class="content">
+          <div class="text">
+            <p>
+              <div class="title"><b>Experiments </b></div>
+<!--               <b>
+                <font size="5">Transformers as dynamics models</font>
+              </b> -->
+              <!-- &nbsp; -->
+              Our experiments explore three domains and demonstrate the unique capabilities of AC-State : (i) AC-State learns the controllable latent state of a real robot from a high-resolution video of the robot with rich temporal background structure (a TV playing a video, flashing lights, dipping birds, and even people) dominating the information in the observed dynamics (ii)  multiple mazes and functionally identical agents where only one agent is controlled. AC-State only learns about the controlled agent while ignoring others, enabling the solution of a hard maze-exploration problem (iii) AC-State learns controllable latent state in a house navigation environment where the observations are high-resolution images and the camera's vertical position  randomly oscillates, showing that the algorithm is invariant to exogenous viewpoint noise which radically changes the observation. 
+          </p>
+          <br>
+          <br>
+          <center>
+            <img src="images/robot.png" alt="hi" class="inline"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <br>
+            <i>A real robot arm moving between nine positions (left).  The quality of controllable latent state dynamics learned by AC-State is better than one-step inverse models and autoencoders (bottom right).</i>
+          </center>
+          <br>
+          </div>
+        </div>
+        <br>
+        <br>
+
+          <br>
+          <br>
+          <center>
+            <img src="images/maze.png" alt="hi" class="inline"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="images/reset.png" alt="hi" class="inline"/>
+            <br>
+            <i>  We study a multi-agent world where each of the nine mazes has a separately controlled agent. Training AC-State with the actions of a specific agent discovers its controllable latent state while discarding information about the other mazes (top).  In a version of this environment where a fixed third of the actions cause the agent's position to reset to the top left corner, a random policy fails to explore, whereas planned exploration using AC-State reaches all parts of the maze (bottom).</i>
+          </center>
+          <br>
+          </div>
+        </div>
+        <br>
+        <br>
+
+          <br>
+          <br>
+          <center>
+            <img src="images/robotrec.png" alt="hi" class="inline"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="images/heatmap.png" alt="hi" class="inline"/>
+            <br>
+            <i>  AC-State discovers controllable latent state in a visual robotic setting with temporally correlated distractors: a TV, flashing lights, and drinking bird toys (top left).  We visualize the learned latent state by training a decoder to reconstruct the observation (top right).  This shows that AC-State learns to discover the robot arm's position while ignoring the background distractors (videos in supplement).  In co-occurrence histograms (bottom), autoencoders fail (bottom left),  one-step inverse models fall prey to the same counterexample in theory and in experiment (bottom center), and \selfstate discovers a perfect controllable latent state (diagonal histogram,  bottom right).</i>
+          </center>
+          <br>
+          </div>
+        </div>
+        <br>
+        <br>
+
+
+        <div class="content">
+          <div class="text">
+            <p>
+              <div class="title"><b>Summary</b></div>
+   <!--            <b>
+                <font size="5.0">
+                Beam search as trajectory optimizer
+              </font>
+              </b> -->
+               <!-- . -->
+              <!-- Various control settings can be reduced to slight modifications of beam search with a sequence model. -->
+              <ul>
+                <li>AC-State reliably discovers controllable latent state across multiple domains.  The vast simplification of the controllable latent state discovered by \selfstate enables visualization, exact planning, and fast exploration. The field of self-supervised reinforcement learning particularly benefits from these approaches, with \selfstate useful across a wide range of applications involving interactive agents as a self contained module to improve sample efficiency given any task specification. As the richness of sensors and the ubiquity of computing technologies (such as virtual reality, internet of things, and self-driving cars) continues to grow, the capacity to discover agent-controllable latent states enables new classes of applications. </li>
+                <li>Conditioning trajectories on a future desired state alongside previously-encountered states yields a goal-reaching method.</li>
+                <br>
+                <br>
+              </ul>
+          </p>
+          </div>
+        </div>
+
+<!--         <div class="content">
+          <div class="text">
+              <div class="title"><b>Offline Reinforcement Learning as One Big Sequence Modeling Problem</b></div>
+                 <div class="authors">
+                    <a href="https://jannerm.github.io/">Michael Janner</a>,
+                    <a href="https://scholar.google.com/citations?user=qlwwdfEAAAAJ&hl=en">Qiyang (Colin) Li</a>, and
+                    <a href="https://people.eecs.berkeley.edu/~svlevine/">Sergey Levine</a>
+                  </div>
+                <div>
+                  <span class="venue"><a href="https://neurips.cc/">NeurIPS 2021</a></span>
+                  <span class="tag">
+                    <a href="https://arxiv.org/abs/2106.02039">Paper</a>&nbsp;
+                    <!-- <a href="./trajectory-transformer-neurips-2021.pdf">Paper</a>&nbsp; -->
+                    <a href="https://github.com/JannerM/trajectory-transformer">Code</a>&nbsp;
+                    <a href="https://bair.berkeley.edu/blog/2021/11/19/trajectory-transformer/">Blog</a>&nbsp;
+                    <a href="files/bib.txt">BibTex</a>&nbsp;
+                  </span>
+                </div>
+              </li>
+          </div>
+        </div> -->
+
+        <br><br><br>
+<!--         <div class="content">
+          <div class="text">
+              <div class="title"><b>Related Publication</b></div>
+                Chen et al concurrently proposed another sequence modeling approach to reinforcement learning. At a high-level, ours is more model-based in spirit and theirs is more model-free, which allows us to evaluate Transformers as long-horizon dynamics models (<i>e.g.</i>, in the humanoid predictions above) and allows them to evaluate their policies in image-based environments (<i>e.g.</i>, Atari).
+                <a href="https://sites.google.com/berkeley.edu/decision-transformer">We encourage you to check out their work as well.</a>
+              </li>
+          </div>
+        </div> -->
+ 
+      </div>
+    </div>
+
+<br><br><br><br>  
+
+
+</div></body></html>

@@ -1,1 +1,270 @@
-Hello World
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GDXSC5Y2BD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GDXSC5Y2BD');
+</script>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<script src="./files/head.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<meta name="keywords" content="Microsoft Research NYC,Reinforcement,Learning,Computer Science,Machine,Artificial,Intelligence">
+
+<article class="post-content">
+  <meta name="twitter:title" content="Guaranteed Discovery of Controllable Latent States with Multi-Step Inverse Models"/>
+  <meta name="twitter:card" content="summary_large_image" />
+<article class="post-content">
+
+<title>Guaranteed Discovery of Controllable Latent States with Multi-Step Inverse Models</title>
+<link rel="stylesheet" href="./files/font.css">
+<link rel="stylesheet" href="./files/main.css">
+
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+<style>
+body {
+  font-family: "Computer Modern Serif", serif;
+  font-size: 14pt;
+}
+
+
+* {padding:0;margin:0;box-sizing:border-box;}
+#video {
+  position: relative;
+  padding-bottom: 45%; /* 16:9 */
+  height: 0;
+}
+#video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 100%;
+  transform: translateX(12.5%);
+}
+
+</style>
+
+  <style type="text/css">/**
+ * Style sheet used by new LibX tooltip code
+ */
+
+/* We insert a <div> with libx-tooltip style under the body.
+ * This will inherit body's style - we can't afford to inherit undesirable 
+ * styles and we must redefine what we need.  OTOH, some things, e.g.
+ * font-size, might be ok to be inherited to stay within the page's tone.
+ */
+.libx-tooltip {
+    display: none;
+    overflow: visible;
+    padding: 5px;
+    z-index: 100;
+    background-color: #eee;
+    color: #000;
+    font-weight: normal;
+    font-style: normal;
+    text-align: left;
+    border: 2px solid #666;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+
+.libx-tooltip p {
+    /* override default 1em margin to keep paragraphs inside a tooltip closer together. */
+    margin: .2em;
+}
+</style><style type="text/css">/**
+ * Style sheet used by LibX autolinking code
+ */
+.libx-autolink {
+}
+
+</style>
+
+</head>
+
+  <body>
+
+    <div class="outercontainer">
+      <div class="container">
+
+        <div class="content project_title">
+          <br>
+          <h2>Guaranteed Discovery of Controllable Latent States with Multi-Step Inverse Models</h2>
+
+          <div class="authors rows text-center">
+            <a href="https://scholar.google.ca/citations?user=BFzFy1YAAAAJ&hl=en">Alex Lamb</a>,
+            <a href="https://scholar.google.ca/citations?hl=en&user=2_4Rs44AAAAJ&view_op=list_works">Riashat Islam</a>,
+            <a href="https://sites.google.com/view/yonathan-efroni/home">Yonathan Efroni</a>,
+            <a href="https://www.aniketdidolkar.in/">Aniket Didolkar</a>,
+            <a href="https://dipendramisra.com/">Dipendra Misra</a>,
+            <a href="https://dylanfoster.net/">Dylan Foster</a>,
+            <a href="https://scriptedonachip.com/">Olalekan Ogunmolu</a>,
+            <a href="https://www.linkedin.com/in/rajanchari">Rajan Chari</a>,  
+            <a href="https://people.cs.umass.edu/~akshay/">Akshay Krishnamurthy</a>, and
+            <a href="https://hunch.net/~jl/">John Langford</a>
+          </div><br/>
+
+          <div class="rows text-center">
+            <span class="venue"><a href="https://neurips.cc/">(In Submission)</a></span>
+            <span class="tag">
+              <a href="https://arxiv.org/abs/2106.02039232323232">Paper</a>&nbsp;
+              <!-- <a href="./trajectory-transformer-neurips-2021.pdf">Paper</a>&nbsp; -->
+              <a href="https://github.com/Riashat/discrete-factors">Code</a>&nbsp;
+              <a href="files/bib.txt">BibTex</a>&nbsp;
+            </span>
+          </div>
+        </div>
+
+        <br><br>
+
+<!--         <center>
+        <b><font size="4">Latent State Discovery</font></b>
+        <video width=100% height=auto autoplay playsinline muted>
+          <source src="https://people.eecs.berkeley.edu/~janner/trajectory-transformer/images/gif_transformer.mp4" type="video/mp4">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/35JzR2ymxJE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </video>
+        <center> -->
+
+        <center>
+        <b><font size="4">Recovering the controllable latent dynamics in presence of distractors/exogenous noise</font></b>
+        <div class="content">
+          <div class="text">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/prS5EG9dLVg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <br>
+        <!-- <i>Recovering the latent dynamics in presence of exogenous information</i>-->
+        </center>
+        <p>
+
+        <div class="content">
+          <div class="title rows"><h3>AC-State: Principled Representation Learning for Reinforcement Learning</h3></div>
+          <div class="text rows">
+            <p>
+              <!-- <div class="title rows"><b>Significance Statement</b></div>-->
+<!--               <b>
+                <font size="5">Summary</font>
+              </b> -->
+              <!-- &nbsp; -->
+              The AC-State algorithm discovers a latent representation of a system from a sequence of sensory observations and actions taken by an agent interacting in the system, while requiring no external supervision (such as rewards or labels).  
+              This consists of predicting actions from observations with the smallest possible representation.  This representation provably captures all of the information which is necessary for controlling the agent while discarding all irrelevant or distracting details. 
+              Previous approaches either fail to capture the full state or fail to ignore irrelevant information.  
+              We demonstrate this on a robot arm where we are able to recover the position of the arm using only a high-resolution video and recorded actions, while ignoring complex background distractors. 
+          </p>
+          </div>
+        </div>
+
+        <center>
+          <li>AC-State (right) is able to recover the controllable latent state of the factorized dynamics (left)</li>
+          <img src="images/method.png" alt="hi" class="inline" style="max-width: 70%;"/>
+          <br>
+          <br>
+        </center>
+
+        <div class="content rows">
+          <div class="text rows">
+            <div class="title"><h3>Background: Why do we need latent state decoding?</h3></div>
+            <p> A person walking along a city street who tries to model all aspects of the world would quickly be overwhelmed
+              by a multitude of shops, cars, and people moving in and out of view, following their own complex and inscrutable dynamics.
+              Exploration and navigation in such an environment is an everyday task, requiring no vast exertion of mental resources.
+              Is it possible to turn this fire hose of sensory information into a minimal latent state which is necessary and
+              sufficient for an agent to successfully act in the world? We formulate this question concretely, and propose
+              the Agent-Controllable State Discovery algorithm (AC-State), which has theoretical guarantees and is practically
+              demonstrated to discover the minimal controllable latent state which contains all of the information necessary
+              for controlling the agent, while fully discarding all irrelevant information.    This algorithm consists of a
+              multi-step inverse model (predicting actions from distant observations) with an information bottleneck.
+              AC-State enables localization, exploration, and navigation without reward or demonstrations.
+              We demonstrate the discovery of controllable latent state in three domains: localizing a robot arm with
+              distractions (e.g., changing lighting conditions and background), exploring in a maze alongside other agents,
+              and navigating in the Matterport house simulator.</p>
+          <br>
+          <br>
+          <center>
+            <img src="images/robot.png" alt="hi" class="inline" style="max-width: 80%;"/>
+            <br>
+            <i>A real robot arm moving between nine positions (left).  The quality of controllable latent state dynamics learned by AC-State is better than one-step inverse models and autoencoders (bottom right).</i>
+          </center>
+          <br>
+          <center>
+            <img src="images/robotrec.png" alt="hi" class="inline" style="max-width: 80%;"/>
+            <br>
+            <i>AC-State discovers controllable latent state in a visual robotic setting with temporally correlated distractors: a TV, flashing lights, and drinking bird toys (top left).  We visualize the learned latent state by training a decoder to reconstruct the observation (top right).  This shows that AC-State learns to discover the robot arm's position while ignoring the background distractors (videos in supplement).  In co-occurrence histograms (bottom), autoencoders fail (bottom left),  one-step inverse models fall prey to the same counterexample in theory and in experiment (bottom center), and AC-State discovers a perfect controllable latent state (diagonal histogram,  bottom right).</i>
+          </center>          
+          </div>
+        </div>
+        <br>
+        <br>
+
+        <div class="content rows">
+          <div class="title rows"><h3>Experiments</h3></div>
+          <div class="text rows">
+              <ul style="margin-left:2%; margin-top:1%">
+                <li>AC-State learns the controllable latent state of a real robot from a high-resolution video of the robot with rich temporal background structure (a TV playing a video, flashing lights, dipping birds, and even people) dominating the information in the observed dynamics</li>
+                <li>multiple mazes and functionally identical agents where only one agent is controlled. AC-State only learns about the controlled agent while ignoring others, enabling the solution of a hard maze-exploration problem</li>
+                <li>AC-State learns controllable latent state in a house navigation environment where the observations are high-resolution images and the camera's vertical position  randomly oscillates, showing that the algorithm is invariant to exogenous viewpoint noise which radically changes the observation. </li>
+              </ul>
+
+          </div>
+        </div>
+
+
+
+        <div class="content">
+          <div class="text">
+          <br>
+          <br>
+          <center>
+            <img src="images/maze.png" alt="hi" class="inline" style="max-width: 80%;"/>
+            <br>
+          </center>
+          <br>
+          <center>
+            <img src="images/reset.png" alt="hi" class="inline" style="max-width: 80%;"/>
+            <br>
+            <i>We study a multi-agent world where each of the nine mazes has a separately controlled agent. Training AC-State with the actions of a specific agent discovers its controllable latent state while discarding information about the other mazes (top).  In a version of this environment where a fixed third of the actions cause the agent's position to reset to the top left corner, a random policy fails to explore, whereas planned exploration using AC-State reaches all parts of the maze (bottom).</i>
+          </center>          
+          </div>
+        </div>
+        <br>
+        <br>
+
+        <div class="content rows" style="margin-bottom: 5%">
+          <div class="text rows">
+          <center>
+            <img src="images/matterport.png" alt="hi" class="inline" style="max-width: 80%;"/>
+            <p class="text-center"><i>We evaluate AC-State in a house navigation environment (top), where the agent observes high resolution images of first-person views where the vertical position of the camera is random exogenous noise (center). The algorithm discovers a controllable latent state which is parsimonious (bottom left).  AC-State captures the position of the agent in the house and discards information about the position of the camera (bottom right).  The baselines we consider capture the controllable latent state but fail to discard the exogenous noise.</i></p>
+          </center>          
+          </div>
+        </div>
+
+
+        <div class="content rows">
+          <div class="title rows"><h3>Summary</h3></div>
+          <div class="text rows">
+              <ul style="margin-left:2%; margin-top:1%">
+                <li>AC-State reliably discovers controllable latent state across multiple domains.  The vast simplification of the controllable latent state discovered by AC-State enables visualization, exact planning, and fast exploration. The field of self-supervised reinforcement learning particularly benefits from these approaches, with AC-State useful across a wide range of applications involving interactive agents as a self contained module to improve sample efficiency given any task specification. As the richness of sensors and the ubiquity of computing technologies (such as virtual reality, internet of things, and self-driving cars) continues to grow, the capacity to discover agent-controllable latent states enables new classes of applications. </li>
+                <li>Conditioning trajectories on a future desired state alongside previously-encountered states yields a goal-reaching method.</li>
+              </ul>
+          </div>
+        </div>
